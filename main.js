@@ -4,8 +4,49 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+document.addEventListener("DOMContentLoaded", () => {
+  addListenerToLikeButton();
+
+})
+
+const errorText = document.querySelector("div#modal")
+errorText.hidden = true;
+
+//add event listener to like buttons
+const addListenerToLikeButton = () => {
+  let heartButton = document.querySelectorAll("article footer li")
+  heartButton.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      mimicServerCall()
+      .then(() => {
+        let currentButton = event.target.children[0]
+        let buttonClassArr = currentButton.className.split(" ")
+        if (buttonClassArr.includes("activated-heart")) {
+          currentButton.classList.remove("activated-heart")
+        } else {
+          currentButton.classList.add("activated-heart")
+          errorText.hidden = true
+        }
+      })
+      .catch(error => {
+        errorText.innerHTML = error
+        errorText.hidden = false
+        setTimeout(() => {
+          errorText.hidden = true
+        }, 3000)
+      })
+    })
+  })
+
+}
 
 
+
+const heartClickHandler = () => {
+
+
+}
+heartClickHandler()
 
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
